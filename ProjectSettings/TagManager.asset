@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - FPEPutBackObjects
+  - FPEPickupObjects
+  - FPEPlayer
+  - FPEObjectExamination
+  - FPEIgnore
   - 
   - 
   - 
