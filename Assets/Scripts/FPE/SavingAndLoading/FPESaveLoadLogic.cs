@@ -429,7 +429,7 @@ namespace Whilefun.FPEKit
                 }
                 else
                 {
-                    Debug.LogError("FPESaveLoadLogic:: Loading data encountered unknown InventoryItemType '" + data[i].InventoryItemType + "'. This object will NOT be loaded. Ensure that all Inventory Item prefabs are located in the '"+ FPEObjectTypeLookup.InventoryResourcePath + "' sub folder of a Resources folder.  Also ensure that there is an entry in the FPEObjectTypeLookup 'inventoryItemsLookup' Dictionary for type '" + data[i].InventoryItemType + "'");
+                    Debug.LogError("FPESaveLoadLogic:: Loading data encountered unknown InventoryItemType '" + data[i].InventoryItemType + "'. This object will NOT be loaded. Ensure that all Inventory Item prefabs are located in the '" + FPEObjectTypeLookup.InventoryResourcePath + "' sub folder of a Resources folder.  Also ensure that there is an entry in the FPEObjectTypeLookup 'inventoryItemsLookup' Dictionary for type '" + data[i].InventoryItemType + "'");
                 }
 
             }
@@ -573,7 +573,7 @@ namespace Whilefun.FPEKit
 
                 if (tempObject != null)
                 {
-                    
+
                     tempLoadedObject = Instantiate(tempObject) as GameObject;
                     tempLoadedObject.name = data[i].PrefabName;
                     tempLoadedObject.transform.position = data[i].getPosition();
@@ -588,7 +588,7 @@ namespace Whilefun.FPEKit
             }
 
         }
-        
+
         #endregion
 
         #region PLAYER_DATA
@@ -771,7 +771,7 @@ namespace Whilefun.FPEKit
             // We add padding to 0th entry in case there were no doors in the scene that was saved
             doorData.Add(new FPEDoorSaveData("PADDING", 0, "", Vector3.zero, false, false));
 
-            for(int d = 0; d < allTheDoors.Length; d++)
+            for (int d = 0; d < allTheDoors.Length; d++)
             {
                 doorData.Add(allTheDoors[d].getSaveGameData());
             }
@@ -1094,12 +1094,14 @@ namespace Whilefun.FPEKit
         /// <returns>Saveable type containing the options data</returns>
         public FPEGameOptionsSaveData gatherGameOptionsSaveData()
         {
-            
+
             FPEGameOptionsSaveData optionsData = new FPEGameOptionsSaveData(FPEInputManager.Instance.LookSensitivity.x,
-                                                                            FPEInputManager.Instance.LookSmoothing, 
+                                                                            FPEInputManager.Instance.LookSmoothing,
                                                                             FPEInputManager.Instance.UseGamepad,
                                                                             FPEInputManager.Instance.FlipYAxisMouseOnly,
-                                                                            FPEInputManager.Instance.FlipYAxisGamepadOnly);
+                                                                            FPEInputManager.Instance.FlipYAxisGamepadOnly,
+                                                                            FPEMenu.Instance.TargetFrameRate
+                                                                            );
 
             return optionsData;
 
@@ -1117,6 +1119,7 @@ namespace Whilefun.FPEKit
             FPEInputManager.Instance.UseGamepad = data.UseGamepad;
             FPEInputManager.Instance.FlipYAxisMouseOnly = data.FlipYAxisMouseOnly;
             FPEInputManager.Instance.FlipYAxisGamepadOnly = data.FlipYAxisGamepadOnly;
+            FPEMenu.Instance.TargetFrameRate = data.TargetFrameRate;
 
             if (FPEInteractionManagerScript.Instance != null)
             {

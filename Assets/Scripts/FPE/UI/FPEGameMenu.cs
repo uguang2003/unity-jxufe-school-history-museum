@@ -112,6 +112,7 @@ namespace Whilefun.FPEKit
         private FPEMenuToggle useGamepadToggle = null;
         private FPEMenuToggle flipMouseYAxisToggle = null;
         private FPEMenuToggle flipGamepadYAxisToggle = null;
+        private FPEMenuToggle targetFrameRateToggle = null;
         private FPEMenuButton loadGameButton = null;
 
         // Visual feedback when errors occur, etc.
@@ -124,10 +125,8 @@ namespace Whilefun.FPEKit
         private float jiggleTimer = 0.0f;
         private float jiggleOffset = 0.0f;
 
-
         public override void Awake()
         {
-
             base.Awake();
 
             menuCanvas = transform.Find("MenuCanvas").gameObject;
@@ -220,7 +219,7 @@ namespace Whilefun.FPEKit
             notesPanel.SetActive(true);
             noteSlots = menuCanvas.gameObject.GetComponentsInChildren<FPENoteEntrySlot>();
 
-            if(noteSlots == null || noteSlots.Length < 2)
+            if (noteSlots == null || noteSlots.Length < 2)
             {
                 Debug.LogError("FPEGameMenu:: There are 1 or fewer note slots on the notes panel! Things will break.");
             }
@@ -243,6 +242,7 @@ namespace Whilefun.FPEKit
             useGamepadToggle = systemPanel.gameObject.transform.Find("UseGamepadToggle").GetComponent<FPEMenuToggle>();
             flipMouseYAxisToggle = systemPanel.gameObject.transform.Find("FlipMouseYAxisToggle").GetComponent<FPEMenuToggle>();
             flipGamepadYAxisToggle = systemPanel.gameObject.transform.Find("FlipGamepadYAxisToggle").GetComponent<FPEMenuToggle>();
+            targetFrameRateToggle = systemPanel.gameObject.transform.Find("TargetFrameRateToggle").GetComponent<FPEMenuToggle>();
             loadGameButton = systemPanel.gameObject.transform.Find("LoadGameButton").GetComponent<FPEMenuButton>();
 
             if (!mouseSensitivityValueText || !lookSmoothingToggle || !useGamepadToggle || !flipMouseYAxisToggle || !flipGamepadYAxisToggle || !loadGameButton)
@@ -284,6 +284,16 @@ namespace Whilefun.FPEKit
         {
 
             base.Start();
+
+            //设置帧率
+            if (targetFrameRate)
+            {
+                Application.targetFrameRate = 120;
+            }
+            else
+            {
+                Application.targetFrameRate = 30;
+            }
 
             menuAudio = gameObject.GetComponent<AudioSource>();
 
@@ -388,7 +398,6 @@ namespace Whilefun.FPEKit
                 // Restore previous selections, or switch to defaults if first time using menu
                 restoreTabSelection(previouslySelectedTab);
                 menuActive = true;
-
             }
 
         }
@@ -417,7 +426,7 @@ namespace Whilefun.FPEKit
             }
 
         }
-        
+
         public void changeMenuTabTo(int tab)
         {
 
@@ -533,7 +542,7 @@ namespace Whilefun.FPEKit
             }
 
         }
-        
+
         private void menuTabError(FPEMenuTab tab)
         {
 
@@ -774,15 +783,15 @@ namespace Whilefun.FPEKit
             selectItemPage(previouslySelectedPage[(int)eMenuTab.ITEMS]);
 
         }
-        
+
         private void selectItemPage(int pageNumber)
         {
 
             int maxPageNumber = getMaxPagesForTab();
 
-            if(pageNumber >= maxPageNumber)
+            if (pageNumber >= maxPageNumber)
             {
-                previouslySelectedPage[(int)eMenuTab.ITEMS] = maxPageNumber-1;
+                previouslySelectedPage[(int)eMenuTab.ITEMS] = maxPageNumber - 1;
             }
             else
             {
@@ -1128,7 +1137,7 @@ namespace Whilefun.FPEKit
 
             exitConfirmationPanel.SetActive(true);
             // Highlight the 'no' button by default
-            myEventSystem.SetSelectedGameObject(exitConfirmationButtons[exitConfirmationButtons.Length-1].gameObject);
+            myEventSystem.SetSelectedGameObject(exitConfirmationButtons[exitConfirmationButtons.Length - 1].gameObject);
 
         }
 
@@ -1137,7 +1146,7 @@ namespace Whilefun.FPEKit
 
             exitConfirmationPanel.SetActive(false);
             // When returning to menu, assume that we should re-highlight the exit button
-            myEventSystem.SetSelectedGameObject(systemButtons[systemButtons.Length-1].gameObject);
+            myEventSystem.SetSelectedGameObject(systemButtons[systemButtons.Length - 1].gameObject);
 
         }
 
@@ -1156,7 +1165,7 @@ namespace Whilefun.FPEKit
         {
 
             float changedSensitivity = FPEInputManager.Instance.LookSensitivity.x + amount;
-            if(changedSensitivity < minSensitivity)
+            if (changedSensitivity < minSensitivity)
             {
                 changedSensitivity = minSensitivity;
             }
@@ -1170,14 +1179,30 @@ namespace Whilefun.FPEKit
 
         }
 
+        public void changeScreenTargetFrameRate(bool toggleValue)
+        {
+            targetFrameRate = toggleValue;
+            //设置帧率
+            if (targetFrameRate)
+            {
+                Application.targetFrameRate = 120;
+            }
+            else
+            {
+                Application.targetFrameRate = 30;
+            }
+            refreshOptionsValues();
+        }
+
         private void refreshOptionsValues()
         {
 
             mouseSensitivityValueText.text = FPEInputManager.Instance.LookSensitivity.x.ToString("n1");
-            lookSmoothingToggle.ForceToggleState(FPEInputManager.Instance.LookSmoothing);
-            useGamepadToggle.ForceToggleState(FPEInputManager.Instance.UseGamepad);
+            //lookSmoothingToggle.ForceToggleState(FPEInputManager.Instance.LookSmoothing);
+            //useGamepadToggle.ForceToggleState(FPEInputManager.Instance.UseGamepad);
             flipMouseYAxisToggle.ForceToggleState(FPEInputManager.Instance.FlipYAxisMouseOnly);
-            flipGamepadYAxisToggle.ForceToggleState(FPEInputManager.Instance.FlipYAxisGamepadOnly);
+            targetFrameRateToggle.ForceToggleState(targetFrameRate);
+            //flipGamepadYAxisToggle.ForceToggleState(FPEInputManager.Instance.FlipYAxisGamepadOnly);
 
             // Always save options when they are changed - assumes they are refreshed using this function when changed from UI.
             if (FPESaveLoadManager.Instance != null)
@@ -1288,7 +1313,7 @@ namespace Whilefun.FPEKit
         {
 
             int maxPageNumber = getMaxPagesForTab();
-            pageIndicatorText.text = "Page " + (pageNumber + 1) + "/" + maxPageNumber;
+            pageIndicatorText.text = (pageNumber + 1) + "/" + maxPageNumber + " 页";
 
             // If we have 1 page, disable all buttons
             if (maxPageNumber == 1)
@@ -1299,9 +1324,9 @@ namespace Whilefun.FPEKit
                 previousPageHint.SetActive(false);
                 nextPageHint.SetActive(false);
 
-                if(itemData.Length == 0)
+                if (itemData.Length == 0)
                 {
-                    pageIndicatorText.text = "Page -/-";
+                    pageIndicatorText.text = "-/- 页";
                 }
 
             }
@@ -1316,7 +1341,7 @@ namespace Whilefun.FPEKit
 
             }
             // If we have more than one, and are not on that one, enable both buttons
-            else if (maxPageNumber > 1 && pageNumber != (maxPageNumber-1))
+            else if (maxPageNumber > 1 && pageNumber != (maxPageNumber - 1))
             {
 
                 previousPageButton.GetComponent<FPEMenuButton>().enableButton();
@@ -1337,7 +1362,7 @@ namespace Whilefun.FPEKit
             }
             else
             {
-                Debug.LogError("FPEGameMenu.refreshPageHintsUI():: Encountered bad combination of number of inventory items and max pages for '"+currentMenuTab+"' tab. Prev/Next page buttons won't work.");
+                Debug.LogError("FPEGameMenu.refreshPageHintsUI():: Encountered bad combination of number of inventory items and max pages for '" + currentMenuTab + "' tab. Prev/Next page buttons won't work.");
             }
 
         }

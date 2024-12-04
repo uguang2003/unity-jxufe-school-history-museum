@@ -13,7 +13,7 @@ using Whilefun.FPEKit;
 //
 public class FPEUniqueNameValidator {
 
-    [MenuItem("While Fun Games/Validate Scene for Saved Games", false, 202)]
+    [MenuItem("SKPL/Validate Scene for Saved Games", false, 202)]
     private static void NewMenuOption()
     {
 

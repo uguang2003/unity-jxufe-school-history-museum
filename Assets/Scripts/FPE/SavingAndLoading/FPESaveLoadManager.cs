@@ -29,7 +29,8 @@ namespace Whilefun.FPEKit
     {
 
         private static FPESaveLoadManager _instance;
-        public static FPESaveLoadManager Instance {
+        public static FPESaveLoadManager Instance
+        {
             get { return _instance; }
         }
 
@@ -174,8 +175,13 @@ namespace Whilefun.FPEKit
 
             loadingUIParentCanvas.SetActive(false);
             baseSavePath = Application.persistentDataPath;
-            autoSavePath = Application.persistentDataPath + "/" + autoSaveDirName;
-            fullSavePath = Application.persistentDataPath + "/" + fullSaveDirName;
+            //if (!Directory.Exists(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Doc) + "/SKPLStorage"))
+            //{
+            //    Directory.CreateDirectory(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "/SKPLStorage");
+            //}
+            //baseSavePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "/SKPLStorage";
+            autoSavePath = baseSavePath + "/" + autoSaveDirName;
+            fullSavePath = baseSavePath + "/" + fullSaveDirName;
 
             // These don't change names at runtime
 
@@ -197,7 +203,7 @@ namespace Whilefun.FPEKit
 #if UNITY_EDITOR
             if (editorDebugKeys)
             {
-                Debug.Log("FPESaveLoadManager:: Debug keys active! 1: Quick Save 2: Quick Load 4: Delete Saved Game File. To disable, uncheck the 'Editor Debug Keys' checkbox in the inspector of object '" + gameObject.name+"'");
+                Debug.Log("FPESaveLoadManager:: Debug keys active! 1: Quick Save 2: Quick Load 4: Delete Saved Game File. To disable, uncheck the 'Editor Debug Keys' checkbox in the inspector of object '" + gameObject.name + "'");
             }
 #endif
 
@@ -242,7 +248,7 @@ namespace Whilefun.FPEKit
                 }
 
             }
-           
+
 #endif
             #endregion
 
@@ -274,7 +280,7 @@ namespace Whilefun.FPEKit
                         {
 
                             currentLoadGameStatus = eLoadGameStatus.RESTORING_SCENE_DATA;
-                            updateStatusMessage("Restoring saved game data...");
+                            updateStatusMessage("恢复已保存的游戏数据...");
                             StartCoroutine(restoreDataForCurrentScene(true));
 
                         }
@@ -314,7 +320,7 @@ namespace Whilefun.FPEKit
                             mySaveLoadLogic.removeAllPickupsInWorld(false);
 
                             currentChangeSceneStatus = eChangeSceneStatus.LOADING_NEXT_SCENE;
-                            updateStatusMessage("Loading Scene " + destinationSceneIndex + "...");
+                            updateStatusMessage("加载场景" + destinationSceneIndex + "...");
                             StartCoroutine(loadNewScene(destinationSceneIndex));
 
                         }
@@ -327,7 +333,7 @@ namespace Whilefun.FPEKit
                         {
 
                             currentChangeSceneStatus = eChangeSceneStatus.RESTORING_SCENE_DATA;
-                            updateStatusMessage("Restoring Data...");
+                            updateStatusMessage("恢复数据...");
                             StartCoroutine(restoreDataForCurrentScene(false));
 
                         }
@@ -357,7 +363,7 @@ namespace Whilefun.FPEKit
                         {
 
                             currentChangeSceneStatus = eChangeSceneStatus.RESTORING_SCENE_DATA;
-                            updateStatusMessage("Restoring Data...");
+                            updateStatusMessage("恢复数据...");
                             StartCoroutine(restoreDataForCurrentScene(false));
 
                         }
@@ -425,7 +431,7 @@ namespace Whilefun.FPEKit
                 case eOperationStatus.SAVING_GAME:
                     savingInProgress = true;
                     resetPlayerLook = false;
-                    updateStatusMessage("Saving Game...");
+                    updateStatusMessage("保存游戏...");
                     break;
 
                 case eOperationStatus.LOADING_GAME:
@@ -435,7 +441,7 @@ namespace Whilefun.FPEKit
                     resetPlayerLook = false;
                     // We also want to stop all diary playback if loading a saved game
                     FPEInteractionManagerScript.Instance.stopAllDiaryPlayback();
-                    updateStatusMessage("Loading Scene...");
+                    updateStatusMessage("加载场景...");
                     break;
 
                 case eOperationStatus.CHANGING_SCENE:
@@ -444,7 +450,7 @@ namespace Whilefun.FPEKit
                     loadingLevelInProgress = true;
                     restoringDataInProgress = true;
                     resetPlayerLook = true;
-                    updateStatusMessage("Changing Scene...");
+                    updateStatusMessage("切换场景...");
                     break;
 
                 case eOperationStatus.CHANGING_SCENE_NOSAVE:
@@ -452,14 +458,14 @@ namespace Whilefun.FPEKit
                     loadingLevelInProgress = true;
                     restoringDataInProgress = true;
                     resetPlayerLook = true;
-                    updateStatusMessage("Changing Scene...");
+                    updateStatusMessage("切换场景...");
                     break;
 
                 case eOperationStatus.RETURN_TO_MAIN_MENU:
                     currentChangeSceneStatus = eChangeSceneStatus.LOADING_NEXT_SCENE;
                     loadingLevelInProgress = true;
                     returningToMainMenu = true;
-                    updateStatusMessage("Returning to Main Menu...");
+                    updateStatusMessage("返回主菜单...");
                     break;
 
                 default:
@@ -486,7 +492,7 @@ namespace Whilefun.FPEKit
         {
 
             // Special case if we're returning to main menu
-            if(returningToMainMenu)
+            if (returningToMainMenu)
             {
 
                 loadingUIParentCanvas.SetActive(false);
@@ -638,7 +644,7 @@ namespace Whilefun.FPEKit
             {
 
                 // If core file exists, read in contents and see if save game is valid
-                if(File.Exists(fullCoreSaveFileFullPath))
+                if (File.Exists(fullCoreSaveFileFullPath))
                 {
 
                     fsCore = new FileStream(fullCoreSaveFileFullPath, FileMode.Open);
@@ -698,7 +704,7 @@ namespace Whilefun.FPEKit
             {
 
                 // On first play, directories will not exist
-                if(Directory.Exists(fullSavePath) == false)
+                if (Directory.Exists(fullSavePath) == false)
                 {
                     Directory.CreateDirectory(fullSavePath);
                 }
@@ -899,7 +905,7 @@ namespace Whilefun.FPEKit
             }
             catch (Exception e)
             {
-                Debug.LogError("FPESaveLoadManager:: Failed to load core save file '"+ fullCoreSaveFileFullPath + "'. Reason: " + e.Message);
+                Debug.LogError("FPESaveLoadManager:: Failed to load core save file '" + fullCoreSaveFileFullPath + "'. Reason: " + e.Message);
             }
             finally
             {
@@ -957,7 +963,7 @@ namespace Whilefun.FPEKit
 
                 FPEDoorway[] doorways = GameObject.FindObjectsOfType<FPEDoorway>();
                 bool foundDoorway = false;
-                
+
                 for (int d = 0; d < doorways.Length; d++)
                 {
 
@@ -1059,7 +1065,7 @@ namespace Whilefun.FPEKit
             return result;
 
         }
-        
+
         #region COROUTINES
 
         /// <summary>
@@ -1104,11 +1110,11 @@ namespace Whilefun.FPEKit
             FPEDoorSaveData[] doorSaveData = mySaveLoadLogic.gatherDoorTypeData();
             FPEGenericObjectSaveData[] genericSaveData = mySaveLoadLogic.gatherGenericSaveTypeData();
             FPEDrawerSaveData[] drawerSaveData = mySaveLoadLogic.gatherDrawerTypeData();
-            
+
             //
             // Your additional Custom Save/Load logic for custom save data types goes here
             //
-            
+
             // Try to write the gathered data to applicable save files on disk
             try
             {
@@ -1168,13 +1174,13 @@ namespace Whilefun.FPEKit
                 {
                     fsLevel.Close();
                 }
-                                
-                if(fsPlayer != null)
+
+                if (fsPlayer != null)
                 {
                     fsPlayer.Close();
                 }
 
-                if(fsInventory != null)
+                if (fsInventory != null)
                 {
                     fsInventory.Close();
                 }
@@ -1233,7 +1239,7 @@ namespace Whilefun.FPEKit
                 {
 
                     fsLevel = new FileStream(levelDataFilename, FileMode.Open);
-                    
+
                     // Note: Read the data in from file in the same order it was written to file
                     loadedWorldInventoryData = (FPEInventoryWorldSaveData[])formatter.Deserialize(fsLevel);
                     loadedWorldPickupData = (FPEPickupWorldSaveData[])formatter.Deserialize(fsLevel);
@@ -1261,7 +1267,7 @@ namespace Whilefun.FPEKit
 
                     // Generic Saveable Objects
                     mySaveLoadLogic.restoreGenericSaveTypeData(loadedGenericData);
-                    
+
                     // Inventory type objects in the world
                     mySaveLoadLogic.removeAllInventoryInWorld(fullLoad);
                     mySaveLoadLogic.createWorldInventory(loadedWorldInventoryData);
@@ -1313,7 +1319,7 @@ namespace Whilefun.FPEKit
                         fsPlayer.Close();
                     }
 
-                    if(fsInventory != null)
+                    if (fsInventory != null)
                     {
                         fsInventory.Close();
                     }

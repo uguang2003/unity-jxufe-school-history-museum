@@ -20,8 +20,16 @@ namespace Whilefun.FPEKit
     {
 
         private static FPEMenu _instance;
-        public static FPEMenu Instance {
+        public static FPEMenu Instance
+        {
             get { return _instance; }
+        }
+
+        public bool targetFrameRate;
+        public bool TargetFrameRate
+        {
+            get { return targetFrameRate; }
+            set { targetFrameRate = value; }
         }
 
         protected bool menuActive = false;
@@ -32,7 +40,7 @@ namespace Whilefun.FPEKit
 
             if (_instance != null)
             {
-                Debug.LogWarning("FPEMenu:: Duplicate instance of FPEMenu called '"+ _instance.gameObject.name + "', deleting.");
+                Debug.LogWarning("FPEMenu:: Duplicate instance of FPEMenu called '" + _instance.gameObject.name + "', deleting.");
                 Destroy(this.gameObject);
             }
             else
@@ -41,7 +49,7 @@ namespace Whilefun.FPEKit
                 DontDestroyOnLoad(this.gameObject);
             }
 
-            
+
 
         }
 

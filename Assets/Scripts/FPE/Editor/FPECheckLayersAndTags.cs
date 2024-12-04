@@ -12,7 +12,7 @@ using Whilefun.FPEKit;
 public class FPECheckLayersAndTags {
 
 
-    [MenuItem("While Fun Games/Check Tags and Layers", false, 203)]
+    [MenuItem("SKPL/Check Tags and Layers", false, 203)]
     private static void NewMenuOption()
     {
 

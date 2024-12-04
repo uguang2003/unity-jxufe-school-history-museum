@@ -6,7 +6,7 @@ namespace Whilefun.FPEKit
 
     // FPESimpleSoundBank
     // This class provides a simple means to play a set of sounds with some randomization.
-    [CreateAssetMenu(menuName = "While Fun Games/Simple Sound Bank")]
+    [CreateAssetMenu(menuName = "SKPL/Simple Sound Bank")]
     [System.Serializable]
     public class FPESimpleSoundBank : FPESoundBank
     {

@@ -15,7 +15,7 @@ public class FPEFindBrokenInteractions {
     private static string validInventoryItemPathEnd = "Resources/InventoryItems";
     private static string validPickupPathEnd = "Resources/Pickups";
 
-    [MenuItem("While Fun Games/Find Broken Interactions", false, 201)]
+    [MenuItem("SKPL/Find Broken Interactions", false, 201)]
     private static void NewMenuOption()
     {
 

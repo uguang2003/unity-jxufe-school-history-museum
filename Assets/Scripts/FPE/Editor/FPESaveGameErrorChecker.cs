@@ -12,7 +12,7 @@ using Whilefun.FPEKit;
 public class FPESaveGameErrorChecker
 {
 
-    [MenuItem("While Fun Games/Check for Save Game Errors", false, 100)]
+    [MenuItem("SKPL/Check for Save Game Errors", false, 100)]
     private static void NewMenuOption()
     {
 

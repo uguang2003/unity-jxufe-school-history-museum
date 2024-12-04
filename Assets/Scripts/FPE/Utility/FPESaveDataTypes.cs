@@ -149,7 +149,8 @@ namespace Whilefun.FPEKit
     {
 
         private FPEInventoryManagerScript.eInventoryItems invType;
-        public FPEInventoryManagerScript.eInventoryItems InventoryItemType {
+        public FPEInventoryManagerScript.eInventoryItems InventoryItemType
+        {
             get { return invType; }
         }
 
@@ -169,14 +170,15 @@ namespace Whilefun.FPEKit
         }
 
     }
-    
+
     // Pickup objects in the world
     [Serializable]
     public class FPEPickupWorldSaveData : FPETransform
     {
 
         private string prefabName;
-        public string PrefabName {
+        public string PrefabName
+        {
             get { return prefabName; }
         }
 
@@ -327,7 +329,7 @@ namespace Whilefun.FPEKit
 
         public override string ToString()
         {
-            return "ACTIV.: '" + objName + "' (" + firedOnce + "," + toggleCurrentlyOn + ","+interactString+")";
+            return "ACTIV.: '" + objName + "' (" + firedOnce + "," + toggleCurrentlyOn + "," + interactString + ")";
         }
 
     }
@@ -400,7 +402,7 @@ namespace Whilefun.FPEKit
 
         public override string ToString()
         {
-            return "FPEJournalSaveData: '"+objName+"' ('"+read+"')";
+            return "FPEJournalSaveData: '" + objName + "' ('" + read + "')";
         }
 
     }
@@ -440,7 +442,8 @@ namespace Whilefun.FPEKit
         private FPEInventoryManagerScript.eInventoryItems invItemType;
         public FPEInventoryManagerScript.eInventoryItems InventoryItemType { get { return invItemType; } }
         private FPEQuaternion localRot;
-        public Quaternion LocalRotation {
+        public Quaternion LocalRotation
+        {
             get { return localRot.getQuaternion(); }
         }
 
@@ -487,7 +490,8 @@ namespace Whilefun.FPEKit
     {
 
         private FPEInventoryManagerScript.eInventoryItems invType;
-        public FPEInventoryManagerScript.eInventoryItems InventoryItemType {
+        public FPEInventoryManagerScript.eInventoryItems InventoryItemType
+        {
             get { return invType; }
         }
 
@@ -528,13 +532,13 @@ namespace Whilefun.FPEKit
 
             AudioClip clip = Resources.Load(FPEObjectTypeLookup.AudioDiaryResourcePath + clipName) as AudioClip;
 
-            if(clip != null)
+            if (clip != null)
             {
                 return new FPEAudioDiaryEntry(title, clip, showTitle);
             }
             else
             {
-                Debug.LogError("FPEAudioDiaryEntry: Could not locate Audio Clip '"+ clipName + "' inside the Resources '"+ FPEObjectTypeLookup.AudioDiaryResourcePath + "' sub folder. Audio Diary with title '"+ title + "' will not play correctly. Returning null.");
+                Debug.LogError("FPEAudioDiaryEntry: Could not locate Audio Clip '" + clipName + "' inside the Resources '" + FPEObjectTypeLookup.AudioDiaryResourcePath + "' sub folder. Audio Diary with title '" + title + "' will not play correctly. Returning null.");
                 return null;
             }
 
@@ -542,7 +546,7 @@ namespace Whilefun.FPEKit
 
         public override string ToString()
         {
-            return "FPEAudioDiarySaveData: title '"+title+"', clipName '"+ clipName + "'";
+            return "FPEAudioDiarySaveData: title '" + title + "', clipName '" + clipName + "'";
         }
 
     }
@@ -574,7 +578,7 @@ namespace Whilefun.FPEKit
 
         public override string ToString()
         {
-            return "FPENoteSaveData: title '"+ title + "', bodyPreview '"+ body.Substring(0, Mathf.Min(20, body.Length))+ "'";
+            return "FPENoteSaveData: title '" + title + "', bodyPreview '" + body.Substring(0, Mathf.Min(20, body.Length)) + "'";
         }
 
     }
@@ -615,7 +619,7 @@ namespace Whilefun.FPEKit
 
             string result = "FPEInventorySaveData:\n";
             result += heldObjData.ToString() + "\n";
-            result += "InvItems data size '"+ invItems.Length + "'\n";
+            result += "InvItems data size '" + invItems.Length + "'\n";
             result += "AudioDiaries data size '" + audioDiaryData.Length + "'\n";
             result += "Notes data size '" + noteData.Length + "'\n";
 
@@ -643,9 +647,11 @@ namespace Whilefun.FPEKit
         public bool FlipYAxisMouseOnly { get { return flipYAxisMouseOnly; } }
         private bool flipYAxisGamepadOnly;
         public bool FlipYAxisGamepadOnly { get { return flipYAxisGamepadOnly; } }
+        private bool targetFrameRate;
+        public bool TargetFrameRate { get { return targetFrameRate; } }
 
 
-        public FPEGameOptionsSaveData(float lookSensitivity, bool lookSmoothing, bool useGamepad, bool flipMouseY, bool flipGamepadY)
+        public FPEGameOptionsSaveData(float lookSensitivity, bool lookSmoothing, bool useGamepad, bool flipMouseY, bool flipGamepadY, bool targetFrameRate)
         {
 
             sensitivity = lookSensitivity;
@@ -653,7 +659,7 @@ namespace Whilefun.FPEKit
             gamepad = useGamepad;
             flipYAxisMouseOnly = flipMouseY;
             flipYAxisGamepadOnly = flipGamepadY;
-
+            this.targetFrameRate = targetFrameRate;
         }
 
         public override string ToString()

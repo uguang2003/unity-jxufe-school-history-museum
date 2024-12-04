@@ -14,7 +14,7 @@ using System.IO;
 public class FPEDeleteLocalSaveData
 {
 
-    [MenuItem("While Fun Games/Delete Local Saved Game Data", false, 301)]
+    [MenuItem("SKPL/Delete Local Saved Game Data", false, 301)]
     private static void NewMenuOption()
     {
 
