@@ -49,7 +49,7 @@ namespace Whilefun.FPEKit
         private GameObject currentAudioDiary = null;
         
         private GameObject currentInteractableObject = null;
-        private GameObject currentHeldObject = null;
+        public GameObject currentHeldObject = null;
         private GameObject currentPutbackObject = null;
         private GameObject interactionObjectPickupLocation = null;
         private GameObject interactionObjectExamineLocation = null;
@@ -1290,7 +1290,6 @@ namespace Whilefun.FPEKit
                 setCursorVisibility(true);
 
             }
-
         }
 
         public void closeMenu()
@@ -1597,7 +1596,7 @@ namespace Whilefun.FPEKit
 
             if (interactableObject.gameObject.GetComponent<FPEAttachedNote>() && !interactableObject.gameObject.GetComponent<FPEAttachedNote>().Collected)
             {
-                showNotification("New note '" + interactableObject.gameObject.GetComponent<FPEAttachedNote>().NoteTitle + "' added");
+                showNotification("新笔记 '" + interactableObject.gameObject.GetComponent<FPEAttachedNote>().NoteTitle + "' 被添加");
                 genericSFXPlayer.GetComponent<AudioSource>().PlayOneShot(noteAdded);
                 inventoryManager.addNoteEntry(interactableObject.gameObject.GetComponent<FPEAttachedNote>().collectNote());
             }

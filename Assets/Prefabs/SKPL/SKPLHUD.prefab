@@ -1765,9 +1765,9 @@ MonoBehaviour:
   inventoryHintFromWorldPreText: "\u6536\u8D77"
   inventoryHintFromHandPreText: "\u6536\u8D77"
   inventoryHintFromHandPostText: "\u8FDB\u5165\u80CC\u5305"
-  audioDiaryHint: Play
-  audioDiaryPlayingPreText: Playing
-  audioDiaryReplayPreText: Re-playing
+  audioDiaryHint: "\u64AD\u653E"
+  audioDiaryPlayingPreText: "\u64AD\u653E\u4E2D"
+  audioDiaryReplayPreText: "\u91CD\u590D\u64AD\u653E\u4E2D"
   audioDiaryPlayingPostText: 
 --- !u!1 &5531761550759317966
 GameObject:

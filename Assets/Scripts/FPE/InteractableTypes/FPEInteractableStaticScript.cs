@@ -20,10 +20,8 @@ namespace Whilefun.FPEKit
 
         public override void Awake()
         {
-
             base.Awake();
             interactionType = eInteractionType.STATIC;
-
         }
 
         public override bool interactionsAllowedWhenHoldingObject()

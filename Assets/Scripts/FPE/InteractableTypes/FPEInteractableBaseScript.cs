@@ -65,7 +65,8 @@ namespace Whilefun.FPEKit
 
         [Header("Interaction Stings")]
         [Tooltip("The string that appears below the reticle when the object is highlighted")]
-        public string interactionString = "<DEFAULT INTERACTION STRING>";
+        //public string interactionString = "<DEFAULT INTERACTION STRING>";
+        public string interactionString = "查看详情";
 
         // Highlight update
         Material[] baseMaterials;
